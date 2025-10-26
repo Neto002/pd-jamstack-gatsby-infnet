@@ -45,7 +45,7 @@ interface CarCardProps {
   price: number;
   year: number;
   km: number;
-  image?: any;
+  image: any;
 }
 
 const CarCard: React.FC<CarCardProps> = ({
