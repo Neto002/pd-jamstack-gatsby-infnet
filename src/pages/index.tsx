@@ -118,16 +118,7 @@ export const query = graphql`
           preco
           km
           ano
-          imagem {
-            childImageSharp {
-              gatsbyImageData(
-                width: 300
-                height: 200
-                transformOptions: { fit: COVER }
-                placeholder: BLURRED
-              )
-            }
-          }
+          imagem
         }
       }
     }

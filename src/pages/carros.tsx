@@ -112,11 +112,7 @@ interface CarrosPageProps {
           preco: number;
           km: number;
           ano: number;
-          imagem: {
-            childImageSharp: {
-              gatsbyImageData: any;
-            };
-          };
+          imagem: string;
         };
       }>;
     };
@@ -314,16 +310,7 @@ export const query = graphql`
           preco
           km
           ano
-          imagem {
-            childImageSharp {
-              gatsbyImageData(
-                width: 300
-                height: 200
-                transformOptions: { fit: COVER }
-                placeholder: BLURRED
-              )
-            }
-          }
+          imagem
         }
       }
     }

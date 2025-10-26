@@ -125,16 +125,7 @@ export const query = graphql`
         km
         ano
         descricao
-        imagem {
-          childImageSharp {
-            gatsbyImageData(
-              width: 1000
-              quality: 90
-              placeholder: BLURRED
-              transformOptions: { fit: CONTAIN }
-            )
-          }
-        }
+        imagem
       }
       body
     }

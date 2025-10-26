@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { Link } from "gatsby";
 
 const Card = styled.div`
@@ -45,7 +44,7 @@ interface CarCardProps {
   price: number;
   year: number;
   km: number;
-  image: any;
+  image?: string;
 }
 
 const CarCard: React.FC<CarCardProps> = ({
@@ -56,16 +55,14 @@ const CarCard: React.FC<CarCardProps> = ({
   km,
   image,
 }) => {
-  const carImage = getImage(image);
-
   return (
     <Link to={`/carros/${slug}`} style={{ textDecoration: "none" }}>
       <Card>
-        {carImage && (
-          <GatsbyImage
-            image={carImage}
+        {image && (
+          <img
+            src={image}
             alt={title}
-            style={{ height: "200px", width: "100%" }}
+            style={{ height: "200px", width: "100%", objectFit: "cover" }}
           />
         )}
         <CardContent>
