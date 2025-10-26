@@ -40,7 +40,7 @@ const Input = styled(Field)`
   }
 `;
 
-const TextArea = styled(Field)`
+const TextArea = styled.textarea`
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -152,7 +152,9 @@ const ContatoPage: React.FC = () => {
 
               <FormGroup>
                 <Label htmlFor="mensagem">Mensagem</Label>
-                <TextArea as="textarea" id="mensagem" name="mensagem" />
+                <Field name="mensagem">
+                  {({ field }: any) => <TextArea id="mensagem" {...field} />}
+                </Field>
                 <ErrorMessage name="mensagem" component={ErrorText} />
               </FormGroup>
 
