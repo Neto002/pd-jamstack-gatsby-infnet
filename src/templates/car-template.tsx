@@ -64,11 +64,7 @@ interface CarPageProps {
         km: number;
         ano: number;
         descricao: string;
-        imagem: {
-          childImageSharp: {
-            gatsbyImageData: any;
-          };
-        };
+        imagem: string;
       };
       body: string;
     };
@@ -77,7 +73,7 @@ interface CarPageProps {
 
 const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
   const { frontmatter } = data.mdx;
-  const image = getImage(frontmatter.imagem);
+  console.log(frontmatter.imagem);
 
   return (
     <Layout>
@@ -93,9 +89,9 @@ const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
           </Details>
         </CarHeader>
 
-        {image && (
+        {frontmatter.imagem && (
           <ImageContainer>
-            <GatsbyImage image={image} alt={frontmatter.title} />
+            <img src={frontmatter.imagem} alt={frontmatter.title} />
           </ImageContainer>
         )}
 
