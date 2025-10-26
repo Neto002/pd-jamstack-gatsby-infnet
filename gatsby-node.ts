@@ -16,8 +16,13 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       preco: Float!
       km: Float!
       ano: Int!
-      descricao: String!
+      descricao: String
       imagem: File @fileByRelativePath
+      childImageSharp: ImageSharp
+    }
+
+    type ImageSharp {
+      gatsbyImageData: JSON
     }
   `);
   };
