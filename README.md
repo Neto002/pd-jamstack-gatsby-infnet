@@ -1,49 +1,71 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby Minimal TypeScript Starter
-</h1>
+# AutoStore - Site de Revenda de Automóveis
 
-## 🚀 Quick start
+Este é um site de revenda de automóveis desenvolvido com Gatsby para o curso de pós-graduação.
 
-1.  **Create a Gatsby site.**
+## 🚗 Funcionalidades
 
-    Use the Gatsby CLI to create a new site, specifying the minimal TypeScript starter.
+- Listagem de carros com imagens otimizadas
+- Páginas individuais para cada veículo
+- Formulário de contato responsivo com validação
+- SEO otimizado com metadados e sitemap
+- Design responsivo
 
-    ```shell
-    # create a new Gatsby site using the minimal TypeScript starter
-    npm init gatsby -- -ts
-    ```
+## 🛠️ Tecnologias Utilizadas
 
-2.  **Start developing.**
+- Gatsby
+- TypeScript
+- Styled Components
+- MDX para conteúdo
+- Formik e Yup para formulários
+- GraphQL para consultas de dados
 
-    Navigate into your new site’s directory and start it up.
+## 📦 Instalação e Execução
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+1. Clone o repositório:
 
-3.  **Open the code and start customizing!**
+```bash
+git clone https://github.com/Neto002/pd-jamstack-gatsby-infnet.git
+cd pd-jamstack-gatsby-infnet
+```
 
-    Your site is now running at http://localhost:8000!
+2. Instale as dependências:
 
-    Edit `src/pages/index.tsx` to see your site update in real-time!
+```bash
+npm install
+```
 
-4.  **Learn more**
+3. Execute o projeto em modo de desenvolvimento:
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Tutorials](https://www.gatsbyjs.com/docs/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Guides](https://www.gatsbyjs.com/docs/how-to/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+```bash
+npm run develop
+```
 
-## 🚀 Quick start (Netlify)
+4. Acesse http://localhost:8000
 
-Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
+## 🚀 Deploy
 
-[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+O site é automaticamente implantado no Netlify através do GitHub Actions quando há um push na branch main.
+
+Para configurar o deploy:
+
+1. Crie uma conta no Netlify
+2. Conecte seu repositório do GitHub
+3. Configure as seguintes variáveis de ambiente no GitHub:
+   - NETLIFY_AUTH_TOKEN
+   - NETLIFY_SITE_ID
+
+## 📝 Estrutura do Projeto
+
+- `/content/carros/`: Arquivos MDX dos veículos
+- `/src/components/`: Componentes React reutilizáveis
+- `/src/pages/`: Páginas do site
+- `/src/templates/`: Templates para páginas geradas dinamicamente
+- `/src/images/`: Imagens do site
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
