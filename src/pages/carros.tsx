@@ -153,6 +153,7 @@ const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = ({ data }) => {
 
     return true;
   }); // Calcular paginação
+
   const totalPages = Math.ceil(filteredCars.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
