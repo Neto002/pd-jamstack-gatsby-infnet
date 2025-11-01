@@ -2,7 +2,6 @@ import React from "react";
 import { graphql, HeadFC } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import styled from "styled-components";
-import { MDXRenderer } from "gatsby-plugin-mdx";
 import { CarMdxFrontmatter } from "../../interfaces/CarMdx";
 import Layout from "../../components/layout/Layout";
 
@@ -63,9 +62,10 @@ interface CarPageProps {
       body: string;
     };
   };
+  children?: React.ReactNode;
 }
 
-const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
+const CarTemplate: React.FC<CarPageProps> = ({ data, children }) => {
   const { frontmatter } = data.mdx;
   console.log(frontmatter.hero_image);
 
@@ -92,18 +92,7 @@ const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
           </ImageContainer>
         )}
 
-        <Content>
-          {MDXRenderer !== undefined && MDXRenderer ? (
-            // MDXRenderer is provided by gatsby-plugin-mdx in most setups
-            // eslint-disable-next-line react/jsx-no-constructed-context-values
-            <MDXRenderer>{data.mdx.body}</MDXRenderer>
-          ) : (
-            // Fallback: avoid runtime crash if MDXRenderer is not available
-            <div className="mdx-fallback">
-              <pre style={{ whiteSpace: "pre-wrap" }}>{data.mdx.body}</pre>
-            </div>
-          )}
-        </Content>
+        <Content>{children}</Content>
       </CarContainer>
     </Layout>
   );
