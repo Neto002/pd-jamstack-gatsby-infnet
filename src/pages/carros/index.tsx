@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { graphql, HeadFC, PageProps } from "gatsby";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
-import Layout from "../components/layout/Layout";
-import CarCard from "../components/CarCard";
+import Layout from "../../components/layout/Layout";
+import CarCard from "../../components/CarCard";
+import { DataMdx } from "../../interfaces/DataMdx";
+import { CarMdx } from "../../interfaces/CarMdx";
 
 const PageHeader = styled.div`
   background-color: #f5f5f5;
@@ -103,20 +105,7 @@ const PageButton = styled.button<{ isActive?: boolean }>`
 `;
 
 interface CarrosPageProps {
-  data: {
-    allMdx: {
-      nodes: Array<{
-        id: string;
-        frontmatter: {
-          title: string;
-          preco: number;
-          km: number;
-          ano: number;
-          imagem: string;
-        };
-      }>;
-    };
-  };
+  data: DataMdx<CarMdx>;
 }
 
 const ITEMS_PER_PAGE = 9;
@@ -138,13 +127,13 @@ const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = ({ data }) => {
   const filteredCars = allCars.filter((car) => {
     const { precoMin, precoMax, anoMin, anoMax, kmMin, kmMax } = filters;
 
-    if (precoMin && precoMin !== "" && car.frontmatter.preco < Number(precoMin))
+    if (precoMin && precoMin !== "" && car.frontmatter.price < Number(precoMin))
       return false;
-    if (precoMax && precoMax !== "" && car.frontmatter.preco > Number(precoMax))
+    if (precoMax && precoMax !== "" && car.frontmatter.price > Number(precoMax))
       return false;
-    if (anoMin && anoMin !== "" && car.frontmatter.ano < Number(anoMin))
+    if (anoMin && anoMin !== "" && car.frontmatter.year < Number(anoMin))
       return false;
-    if (anoMax && anoMax !== "" && car.frontmatter.ano > Number(anoMax))
+    if (anoMax && anoMax !== "" && car.frontmatter.year > Number(anoMax))
       return false;
     if (kmMin && kmMin !== "" && car.frontmatter.km < Number(kmMin))
       return false;
@@ -263,11 +252,14 @@ const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = ({ data }) => {
           <CarCard
             key={car.id}
             title={car.frontmatter.title}
-            slug={car.id}
-            price={car.frontmatter.preco}
-            year={car.frontmatter.ano}
+            slug={car.frontmatter.slug}
+            date={car.frontmatter.date}
+            price={car.frontmatter.price}
+            year={car.frontmatter.year}
             km={car.frontmatter.km}
-            image={car.frontmatter.imagem}
+            description={car.frontmatter.description}
+            hero_image={car.frontmatter.hero_image}
+            hero_image_alt={car.frontmatter.hero_image_alt}
           />
         ))}
       </CarGrid>
@@ -303,15 +295,19 @@ const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = ({ data }) => {
 
 export const query = graphql`
   query CarrosPage {
-    allMdx(sort: { frontmatter: { data: DESC } }) {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
       nodes {
         id
         frontmatter {
           title
-          preco
+          slug
+          date
+          price
           km
-          ano
-          imagem
+          year
+          description
+          hero_image
+          hero_image_alt
         }
       }
     }

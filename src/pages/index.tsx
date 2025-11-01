@@ -3,6 +3,8 @@ import { Link, HeadFC, PageProps, graphql } from "gatsby";
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
 import CarCard from "../components/CarCard";
+import { CarMdx } from "../interfaces/CarMdx";
+import { DataMdx } from "../interfaces/DataMdx";
 
 const Hero = styled.section`
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
@@ -61,20 +63,7 @@ const CarGrid = styled.div`
 `;
 
 interface IndexPageProps {
-  data: {
-    allMdx: {
-      nodes: Array<{
-        id: string;
-        frontmatter: {
-          title: string;
-          preco: number;
-          km: number;
-          ano: number;
-          imagem: any;
-        };
-      }>;
-    };
-  };
+  data: DataMdx<CarMdx>;
 }
 
 const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = ({ data }) => {
@@ -95,11 +84,14 @@ const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = ({ data }) => {
             <CarCard
               key={car.id}
               title={car.frontmatter.title}
-              slug={car.id}
-              price={car.frontmatter.preco}
-              year={car.frontmatter.ano}
+              slug={car.frontmatter.slug}
+              date={car.frontmatter.date}
+              price={car.frontmatter.price}
+              year={car.frontmatter.year}
+              description={car.frontmatter.description}
               km={car.frontmatter.km}
-              image={car.frontmatter.imagem}
+              hero_image={car.frontmatter.hero_image}
+              hero_image_alt={car.frontmatter.hero_image_alt}
             />
           ))}
         </CarGrid>
@@ -110,15 +102,16 @@ const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = ({ data }) => {
 
 export const query = graphql`
   query HomePage {
-    allMdx(sort: { frontmatter: { data: DESC } }, limit: 5) {
+    allMdx(sort: { frontmatter: { date: DESC } }, limit: 3) {
       nodes {
         id
         frontmatter {
           title
-          preco
+          slug
+          price
           km
-          ano
-          imagem
+          year
+          hero_image
         }
       }
     }

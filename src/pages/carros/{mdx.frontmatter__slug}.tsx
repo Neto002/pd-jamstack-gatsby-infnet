@@ -2,8 +2,9 @@ import React from "react";
 import { graphql, HeadFC } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import styled from "styled-components";
-import Layout from "../components/layout/Layout";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { CarMdxFrontmatter } from "../../interfaces/CarMdx";
+import Layout from "../../components/layout/Layout";
 
 const CarContainer = styled.div`
   max-width: 1000px;
@@ -58,14 +59,7 @@ const Content = styled.div`
 interface CarPageProps {
   data: {
     mdx: {
-      frontmatter: {
-        title: string;
-        preco: number;
-        km: number;
-        ano: number;
-        descricao: string;
-        imagem: string;
-      };
+      frontmatter: CarMdxFrontmatter;
       body: string;
     };
   };
@@ -73,25 +67,28 @@ interface CarPageProps {
 
 const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
   const { frontmatter } = data.mdx;
-  console.log(frontmatter.imagem);
+  console.log(frontmatter.hero_image);
 
   return (
     <Layout>
       <CarContainer>
         <CarHeader>
           <Title>{frontmatter.title}</Title>
-          <Price>R$ {frontmatter.preco.toLocaleString("pt-BR")}</Price>
+          <Price>R$ {frontmatter.price.toLocaleString("pt-BR")}</Price>
           <Details>
-            <span>Ano: {frontmatter.ano}</span>
+            <span>Ano: {frontmatter.year}</span>
             <span>
               Quilometragem: {frontmatter.km.toLocaleString("pt-BR")} km
             </span>
           </Details>
         </CarHeader>
 
-        {frontmatter.imagem && (
+        {frontmatter.hero_image && (
           <ImageContainer>
-            <img src={frontmatter.imagem} alt={frontmatter.title} />
+            <GatsbyImage
+              image={getImage(frontmatter.hero_image)!}
+              alt={frontmatter.hero_image_alt}
+            />
           </ImageContainer>
         )}
 
@@ -113,15 +110,18 @@ const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
 };
 
 export const query = graphql`
-  query CarTemplate($id: String!) {
+  query CarTemplate($id: String) {
     mdx(id: { eq: $id }) {
       frontmatter {
         title
-        preco
+        slug
+        date
+        price
         km
-        ano
-        descricao
-        imagem
+        year
+        description
+        hero_image
+        hero_image_alt
       }
       body
     }
@@ -133,6 +133,6 @@ export default CarTemplate;
 export const Head: HeadFC<CarPageProps["data"]> = ({ data }) => (
   <>
     <title>{data.mdx.frontmatter.title} - AutoStore</title>
-    <meta name="description" content={data.mdx.frontmatter.descricao} />
+    <meta name="description" content={data.mdx.frontmatter.description} />
   </>
 );

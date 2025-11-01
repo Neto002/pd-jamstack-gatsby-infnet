@@ -1,21 +1,8 @@
 import React from "react";
-import { useStaticQuery, graphql } from "gatsby";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import Header from "./Header";
 import Footer from "./Footer";
-
-const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    line-height: 1.6;
-  }
-`;
+import "./layout.css";
 
 const Main = styled.main`
   min-height: 100vh;
@@ -36,25 +23,12 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `);
-
   return (
-    <>
-      <GlobalStyle />
-      <Main>
-        <Header />
-        <ContentWrapper>{children}</ContentWrapper>
-        <Footer />
-      </Main>
-    </>
+    <Main>
+      <Header />
+      <ContentWrapper>{children}</ContentWrapper>
+      <Footer />
+    </Main>
   );
 };
 

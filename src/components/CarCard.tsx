@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "gatsby";
+import { CarMdxFrontmatter } from "../interfaces/CarMdx";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const Card = styled.div`
   border: 1px solid #ddd;
@@ -38,30 +40,22 @@ const Details = styled.div`
   font-size: 0.9rem;
 `;
 
-interface CarCardProps {
-  title: string;
-  slug: string;
-  price: number;
-  year: number;
-  km: number;
-  image?: string;
-}
-
-const CarCard: React.FC<CarCardProps> = ({
+const CarCard: React.FC<CarMdxFrontmatter> = ({
   title,
   slug,
   price,
   year,
   km,
-  image,
+  hero_image,
+  hero_image_alt,
 }) => {
   return (
     <Link to={`/carros/${slug}`} style={{ textDecoration: "none" }}>
       <Card>
-        {image && (
-          <img
-            src={image}
-            alt={title}
+        {hero_image && (
+          <GatsbyImage
+            image={getImage(hero_image)!}
+            alt={hero_image_alt}
             style={{ height: "200px", width: "100%", objectFit: "cover" }}
           />
         )}
