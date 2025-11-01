@@ -48,7 +48,6 @@ const Header: React.FC = () => {
         <NavLinks>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/carros">Carros</NavLink>
-          <NavLink to="/sobre">Sobre</NavLink>
           <NavLink to="/contato">Contato</NavLink>
         </NavLinks>
       </Nav>
