@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, HeadFC, PageProps, graphql } from "gatsby";
+import { Link, HeadFC, PageProps, graphql, useStaticQuery } from "gatsby";
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
 import CarCard from "../components/CarCard";
@@ -66,7 +66,32 @@ interface IndexPageProps {
   data: DataMdx<CarMdx>;
 }
 
-const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = ({ data }) => {
+const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = () => {
+  const data = useStaticQuery<DataMdx<CarMdx>>(graphql`
+    query HomePage {
+      allMdx(sort: { frontmatter: { date: DESC } }, limit: 3) {
+        nodes {
+          id
+          frontmatter {
+            title
+            slug
+            date
+            price
+            km
+            year
+            description
+            hero_image {
+              childImageSharp {
+                gatsbyImageData(width: 600, placeholder: BLURRED)
+              }
+            }
+            hero_image_alt
+          }
+        }
+      }
+    }
+  `);
+
   return (
     <Layout>
       <Hero>
@@ -99,24 +124,6 @@ const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = ({ data }) => {
     </Layout>
   );
 };
-
-export const query = graphql`
-  query HomePage {
-    allMdx(sort: { frontmatter: { date: DESC } }, limit: 3) {
-      nodes {
-        id
-        frontmatter {
-          title
-          slug
-          price
-          km
-          year
-          hero_image
-        }
-      }
-    }
-  }
-`;
 
 export default IndexPage;
 

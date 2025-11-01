@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { graphql, HeadFC, PageProps } from "gatsby";
+import { graphql, HeadFC, PageProps, useStaticQuery } from "gatsby";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import Layout from "../../components/layout/Layout";
@@ -110,7 +110,28 @@ interface CarrosPageProps {
 
 const ITEMS_PER_PAGE = 9;
 
-const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = ({ data }) => {
+const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = () => {
+  const data = useStaticQuery<DataMdx<CarMdx>>(graphql`
+    query CarrosPage {
+      allMdx(sort: { frontmatter: { date: DESC } }) {
+        nodes {
+          id
+          frontmatter {
+            title
+            slug
+            date
+            price
+            km
+            year
+            description
+            hero_image
+            hero_image_alt
+          }
+        }
+      }
+    }
+  `);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     precoMin: "",
@@ -292,27 +313,6 @@ const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = ({ data }) => {
     </Layout>
   );
 };
-
-export const query = graphql`
-  query CarrosPage {
-    allMdx(sort: { frontmatter: { date: DESC } }) {
-      nodes {
-        id
-        frontmatter {
-          title
-          slug
-          date
-          price
-          km
-          year
-          description
-          hero_image
-          hero_image_alt
-        }
-      }
-    }
-  }
-`;
 
 export default CarrosPage;
 
