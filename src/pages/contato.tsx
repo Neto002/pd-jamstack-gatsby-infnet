@@ -98,22 +98,34 @@ const validationSchema = Yup.object({
 });
 
 const ContatoPage: React.FC = () => {
+  const encode = (data: any) => {
+    return Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+      )
+      .join("&");
+  };
+
   const handleSubmit = async (
     values: any,
     { setSubmitting, resetForm }: any
   ) => {
-    try {
-      // Simular envio para um endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Dados enviados:", values);
-      alert("Mensagem enviada com sucesso!");
-      resetForm();
-    } catch (error) {
-      console.error("Erro ao enviar:", error);
-      alert("Erro ao enviar mensagem. Tente novamente.");
-    } finally {
-      setSubmitting(false);
-    }
+    // Simular envio para um endpoint
+    fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: encode({ "form-name": "form_react", ...values }),
+    })
+      .then(() => {
+        alert("Mensagem enviada com sucesso!");
+        resetForm();
+        setSubmitting(false);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   return (
@@ -129,6 +141,10 @@ const ContatoPage: React.FC = () => {
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          name="form_react"
+          method="post"
         >
           {({ isSubmitting }) => (
             <Form>
