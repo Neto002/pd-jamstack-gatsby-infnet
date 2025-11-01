@@ -17,6 +17,7 @@ export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] 
       km: Float!
       ano: Int!
       descricao: String
+      slug: String
       imagem: String
     }
   `);
@@ -36,6 +37,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
         internal: {
           contentFilePath: string;
         };
+        frontmatter?: {
+          slug?: string;
+        };
       }>;
     };
   }>(`
@@ -45,6 +49,9 @@ export const createPages: GatsbyNode["createPages"] = async ({
           id
           internal {
             contentFilePath
+          }
+          frontmatter {
+            slug
           }
         }
       }
@@ -73,25 +80,15 @@ export const createPages: GatsbyNode["createPages"] = async ({
 
   const nodes = result.data?.allMdx?.nodes || [];
 
-  for (const node of nodes) {
-    // try to derive a stable slug: prefer frontmatter.slug if present, then filename, then id
-    // fetch frontmatter.slug (safe way using a small query)
-    const fRes = await graphql<{
-      mdx: { frontmatter?: { slug?: string } };
-    }>(
-      `
-        query ($id: String!) {
-          mdx(id: { eq: $id }) {
-            frontmatter {
-              slug
-            }
-          }
-        }
-      `,
-      { id: node.id }
+  reporter.info(`Found ${nodes.length} MDX nodes for carros`);
+  if (nodes.length > 0) {
+    reporter.info(
+      `Sample path: ${nodes[0].internal?.contentFilePath || "(none)"}`
     );
+  }
 
-    const fmSlug = fRes.data?.mdx?.frontmatter?.slug;
+  for (const node of nodes) {
+    const fmSlug = node.frontmatter?.slug;
     const contentPath = node.internal?.contentFilePath || "";
     const fileName = contentPath ? path.basename(contentPath) : "";
     const namePart = fileName
@@ -119,8 +116,6 @@ export const createPages: GatsbyNode["createPages"] = async ({
       },
     });
 
-    // create a redirect from the old id-based path to the new slug path to avoid 404s
-    // this helps if any links or old deploys used the node.id URL
     if (actions.createRedirect) {
       actions.createRedirect({
         fromPath: `/carros/${node.id}`,
