@@ -49,12 +49,14 @@ const CarCard: React.FC<CarMdxFrontmatter> = ({
   hero_image,
   hero_image_alt,
 }) => {
+  const image = getImage(hero_image);
+
   return (
     <Link to={`/carros/${slug}`} style={{ textDecoration: "none" }}>
       <Card>
         {hero_image && (
           <GatsbyImage
-            image={getImage(hero_image)!}
+            image={image!}
             alt={hero_image_alt}
             style={{ height: "200px", width: "100%", objectFit: "cover" }}
           />

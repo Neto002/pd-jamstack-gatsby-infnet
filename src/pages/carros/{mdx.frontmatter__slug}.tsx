@@ -67,7 +67,7 @@ interface CarPageProps {
 
 const CarTemplate: React.FC<CarPageProps> = ({ data, children }) => {
   const { frontmatter } = data.mdx;
-  console.log(frontmatter.hero_image);
+  const image = getImage(frontmatter.hero_image);
 
   return (
     <Layout>
@@ -85,10 +85,7 @@ const CarTemplate: React.FC<CarPageProps> = ({ data, children }) => {
 
         {frontmatter.hero_image && (
           <ImageContainer>
-            <GatsbyImage
-              image={getImage(frontmatter.hero_image)!}
-              alt={frontmatter.hero_image_alt}
-            />
+            <GatsbyImage image={image!} alt={frontmatter.hero_image_alt} />
           </ImageContainer>
         )}
 
@@ -109,7 +106,11 @@ export const query = graphql`
         km
         year
         description
-        hero_image
+        hero_image {
+          childImageSharp {
+            gatsbyImageData(width: 600, placeholder: BLURRED)
+          }
+        }
         hero_image_alt
       }
       body

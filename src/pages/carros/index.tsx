@@ -124,7 +124,11 @@ const CarrosPage: React.FC<PageProps<CarrosPageProps["data"]>> = () => {
             km
             year
             description
-            hero_image
+            hero_image {
+              childImageSharp {
+                gatsbyImageData(width: 600, placeholder: BLURRED)
+              }
+            }
             hero_image_alt
           }
         }
