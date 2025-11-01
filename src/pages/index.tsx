@@ -87,23 +87,6 @@ const IndexPage: React.FC<PageProps<IndexPageProps["data"]>> = ({ data }) => {
         </HeroSubtitle>
         <Cta to="/contato">Entre em Contato</Cta>
       </Hero>
-
-      <Section>
-        <SectionTitle>Veículos em Destaque</SectionTitle>
-        <CarGrid>
-          {data.allMdx.nodes.map((car) => (
-            <CarCard
-              key={car.id}
-              title={car.frontmatter.title}
-              slug={car.id}
-              price={car.frontmatter.preco}
-              year={car.frontmatter.ano}
-              km={car.frontmatter.km}
-              image={car.frontmatter.imagem}
-            />
-          ))}
-        </CarGrid>
-      </Section>
     </Layout>
   );
 };

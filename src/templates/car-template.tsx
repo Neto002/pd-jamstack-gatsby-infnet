@@ -1,6 +1,5 @@
 import React from "react";
 import { graphql, HeadFC } from "gatsby";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
 import { MDXRenderer } from "gatsby-plugin-mdx";
@@ -73,7 +72,7 @@ interface CarPageProps {
 
 const CarTemplate: React.FC<CarPageProps> = ({ data }) => {
   const { frontmatter } = data.mdx;
-  console.log(frontmatter.imagem);
+  console.log(MDXRenderer);
 
   return (
     <Layout>
